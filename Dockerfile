@@ -66,14 +66,17 @@ VOLUME /var/lib/mysql
 
 EXPOSE 3306
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN ln -s usr/local/bin/docker-entrypoint.sh /docker-entrypoint.sh # backwards compat
+COPY docker-entrypoint.sh /
+RUN chmod 0755 /docker-entrypoint.sh
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 #Ftixer d'entrada
 COPY run.sh /entrypoint.sh
+RUN chmod 0755 /entrypoint.sh
 
 #Copiem el fitxer wait-for-it
 COPY wait-for-it.sh /
+RUN chmod 0755 /wait-for-it.sh
 
 CMD ["/entrypoint.sh"]
