@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y perl pwgen --no-install-recommends && r
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5
 
 ENV MYSQL_MAJOR 5.7
-ENV MYSQL_VERSION 5.7.13-1debian8
+ENV MYSQL_VERSION 5.7.15-1debian8
 
 RUN echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-${MYSQL_MAJOR}" > /etc/apt/sources.list.d/mysql.list
 
@@ -62,7 +62,9 @@ RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf \
 	&& echo 'skip-host-cache\nskip-name-resolve' | awk '{ print } $1 == "[mysqld]" && c == 0 { c = 1; system("cat") }' /etc/mysql/my.cnf > /tmp/my.cnf \
 	&& mv /tmp/my.cnf /etc/mysql/my.cnf
 
-VOLUME /var/lib/mysql
+#ASM: BEGIN-Disable anonymous volume because of a Bluemix restriction (https://support.ibmcloud.com/Support/5377/5383/en-us/Ticket/View/12861565)
+#VOLUME /var/lib/mysql
+#ASM: END-Disable anonymous volume because of a Bluemix restriction (https://support.ibmcloud.com/Support/5377/5383/en-us/Ticket/View/12861565)
 
 EXPOSE 3306
 
