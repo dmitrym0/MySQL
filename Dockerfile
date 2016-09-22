@@ -66,6 +66,8 @@ VOLUME /var/lib/mysql
 
 EXPOSE 3306
 
+RUN apt-get update && apt-get install --only-upgrade libc6
+
 COPY docker-entrypoint.sh /
 RUN chmod 0755 /docker-entrypoint.sh
 
