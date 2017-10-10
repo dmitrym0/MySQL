@@ -50,6 +50,10 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 
 		mkdir -p "$DATADIR"
 
+		echo "hola2"
+		
+		echo "$@"
+		
 		echo 'Initializing database'
 		"$@" --initialize-insecure
 		echo 'Database initialized'
@@ -110,7 +114,10 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 			echo 'FLUSH PRIVILEGES ;' | "${mysql[@]}"
 		fi
 
-		echo
+		echo hola
+		
+		echo "${mysql[@]}"
+		
 		for f in /docker-entrypoint-initdb.d/*; do
 			case "$f" in
 				*.sh)     echo "$0: running $f"; . "$f" ;;
