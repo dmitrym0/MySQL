@@ -18,12 +18,11 @@ VOLUME /var/lib/mysql
 COPY docker-entrypoint.sh /entrypoint.sh
 COPY healthcheck.sh /var/lib/mysql-health/healthcheck.sh
 COPY fix-permissions.sh /fix-permissions.sh
+COPY docker-setup.sh /docker-setup.sh
 
 RUN chmod a+x /*.sh /var/lib/mysql-health/healthcheck.sh
 
-COPY docker-setup.sh /
-RUN chmod a+x /docker-setup.sh \
-    && /docker-setup.sh /var/lib/mysql \
+RUN /docker-setup.sh /var/lib/mysql \
 	&& /docker-setup.sh /var/run/mysqld \
 	&& /docker-setup.sh /var/lib/mysql-files \
 	&& /docker-setup.sh /var/lib/mysql-health \
