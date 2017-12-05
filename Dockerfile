@@ -29,7 +29,8 @@ RUN /docker-setup.sh /var/lib/mysql \
 	&& /docker-setup.sh /var/log \
 	&& ln -sf /dev/stdout ${MYSQL_LOG}
 
-RUN sed -i -e "s%datadir=/var/lib/mysql%datadir=/var/lib/mysql/data%g" /etc/my.cnf
+RUN sed -i -e "s%datadir=/var/lib/mysql%datadir=/var/lib/mysql/data%g" /etc/my.cnf \
+    && sed -i -e "s%socket=/var/lib/mysql/mysql.sock%socket=/var/run/mysqld/mysql.sock%g" /etc/my.cnf
 
 ENTRYPOINT ["/fix-permissions.sh","/entrypoint.sh"]
 HEALTHCHECK CMD /var/lib/mysql-health/healthcheck.sh
