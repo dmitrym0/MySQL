@@ -186,6 +186,9 @@ password=healthcheckpass
 EOF
 	touch /var/lib/mysql-health/mysql-init-complete
 	echo "[Entrypoint] Starting MySQL 5.7.20-1.1.2"
+	# Link to default sock
+	rm -rf /var/lib/mysql/mysql.sock
+	ln -s /var/run/mysqld/mysql.sock /var/lib/mysql/mysql.sock
 fi
 
 exec "$@"
